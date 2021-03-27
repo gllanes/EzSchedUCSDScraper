@@ -108,7 +108,9 @@ if __name__ == "__main__":
     quarters_subjects_pages = [
         ("WI21", "CSE", 1),     # Mostly normal - one lecture, couple sections, exam
         ("WI21", "PHYS", 8),    # Additional lecture, invalid length main meeting
-        ("WI21", "ECE", 1)
+        ("WI21", "ECE", 1), 
+        ("WI21", "MATH", 1),
+        ("WI21", "BENG", 2)
     ]
 
     for q, s, p in quarters_subjects_pages:

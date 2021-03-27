@@ -11,6 +11,7 @@ from scrapy.exceptions import DropItem
 from .db.db import DataAccess
 from .items import *
 
+
 pp = pprint.PrettyPrinter(indent = 2)
 
 
@@ -23,7 +24,6 @@ class SubjectCleanerPipeline:
         Returns a cleaned list of subject codes to subject names.
         Also persist subjects here.
         """
-        print("")
         adapter = ItemAdapter(item)
         # Get the list of all subjects
         subjects_codes_values = adapter.get("subjects_codes_values")
@@ -59,9 +59,6 @@ class SubjectCleanerPipeline:
         self.DA.close()
 
 
-SECTION_GROUP_REGEX = re.compile(r"([A-Z]00)|([0-9]{3})")
-
-
 class CourseCleanerPipeline:
 
     def process_item(self, item, spider):
@@ -85,14 +82,9 @@ class CourseCleanerPipeline:
         first_meeting_item = item.get("first_meeting")
         section_group = first_meeting_item.get("number")
         instructor = first_meeting_item.get("instructor")
-        section_group_match = SECTION_GROUP_REGEX.search(section_group)
-        if section_group_match:
-            course_loader.add_value("section_group_code", section_group)
-            course_loader.add_value("instructor", instructor)
-        else:
-            err_msg = f"{item.get('quarter_code')} {item.get('subj_code')} "\
-                f"{item.get('number')} section group invalid: {section_group}"
-            raise DropItem(err_msg)
+        course_loader.add_value("section_group_code", section_group)
+        course_loader.add_value("instructor", instructor)
+    
 
         # First meeting is either essential main or section.
         if first_meeting_item.get("sec_id"):

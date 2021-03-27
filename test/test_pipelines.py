@@ -18,7 +18,6 @@ from test.data import get_spider_parser_items
 #     general_meetings = Field()
 #     dated_meetings = Field()
 
-
 class TestCourseCleanerPipeline(MeetingComparator):
     
     @classmethod
@@ -31,7 +30,7 @@ class TestCourseCleanerPipeline(MeetingComparator):
         cls.pipeline = CourseCleanerPipeline()
 
 
-    def test_pipeline_additional_lecture(self):
+    def test_all_nonenrtxt_meeting_types(self):
         # PHYS 4D A00
         item = self.spider_parser_items[2]
         p_item = self.pipeline.process_item(item, None)
@@ -87,3 +86,120 @@ class TestCourseCleanerPipeline(MeetingComparator):
         ]
 
         self.compare_meeting_item_lists(dated_meetings_exp, p_item.get("dated_meetings"))
+
+
+    def test_pipeline_all_sectxt_types(self):
+        """
+        Test items where there is supposed to be at least one sectxt
+        of each type:
+            - general, essential
+            - general, nonessential
+            - section meeting.
+        Example: WI21, MATH page 1
+        """
+        quarter_code = "WI21"
+        subject_code = "MATH"
+        page_num = 1
+
+        spider_parser_items = get_spider_parser_items(quarter_code, subject_code, page_num)
+        # WI21 MATH 2
+        item = spider_parser_items[0]
+        p_item = self.pipeline.process_item(item, None)
+        
+        instructor_exp = "Quarfoot, David James"
+        self.assertEqual(p_item.get("quarter_code"), quarter_code)
+        self.assertEqual(p_item.get("subj_code"), subject_code)
+        self.assertEqual(p_item.get("number"), "2")
+        self.assertEqual(p_item.get("title"), "Intro to College Mathematics")
+        self.assertEqual(p_item.get("section_group_code"), "A00")
+        self.assertEqual(p_item.get("instructor"), instructor_exp)
+
+        general_meetings_exp = [
+            self.build_meeting_item(
+                None, "LE", "A00", None, "MWF", datetime.time(12, 0),
+                datetime.time(12, 50), "RCLAS", "R67", instructor_exp,
+                None, True
+            ), 
+            self.build_meeting_item(
+                None, "TU", "A50", None, "Th", datetime.time(14, 0),
+                datetime.time(15, 20), "RCLAS", "R102", instructor_exp,
+                None, False
+            ), 
+        ]
+
+        self.compare_meeting_item_lists(general_meetings_exp, p_item.get("general_meetings"))
+
+        section_meetings_exp = [
+            self.build_meeting_item(
+                "27080", "DI", "A01", None, "Tu", datetime.time(14, 0),
+                datetime.time(14, 50), "RCLAS", "R193", instructor_exp,
+                25
+            ), 
+        ]
+
+        self.compare_meeting_item_lists(section_meetings_exp, p_item.get("section_meetings"))
+
+        dated_meetings_exp = [
+            self.build_meeting_item(
+                None, "FI", None, "03/17/2021", "W", datetime.time(11, 30),
+                datetime.time(14, 29), "TBA", "TBA",
+            ), 
+        ]
+
+        self.compare_meeting_item_lists(dated_meetings_exp, p_item.get("dated_meetings"))
+
+    
+    def test_pipeline_first_meeting_is_section(self):
+        """
+        Testing the case where the first meeting is a section meeting.
+        """
+        quarter_code = "WI21"
+        subject_code = "BENG"
+        page_num = 2
+
+        spider_parser_items = get_spider_parser_items(quarter_code, subject_code, page_num)
+        # WI21 MATH 2
+        item = spider_parser_items[9]
+        p_item = self.pipeline.process_item(item, None)
+
+        instructor_exp = "Huang, Xiaohua"
+        self.assertEqual(p_item.get("quarter_code"), quarter_code)
+        self.assertEqual(p_item.get("subj_code"), subject_code)
+        self.assertEqual(p_item.get("number"), "161B")
+        self.assertEqual(p_item.get("title"), "Biochemical Engineering")
+        self.assertEqual(p_item.get("section_group_code"), "A00")
+        self.assertEqual(p_item.get("instructor"), instructor_exp)
+
+        general_meetings_exp = [
+            self.build_meeting_item(
+                None, "DI", "A01", None, "M", datetime.time(10, 0),
+                datetime.time(10, 50), "RCLAS", "R139", instructor_exp, 
+                essential = False
+            ),
+            self.build_meeting_item(
+                None, "DI", "A02", None, "M", datetime.time(11, 0),
+                datetime.time(11, 50), "RCLAS", "R180", instructor_exp, 
+                essential = False
+            )
+        ]
+
+        self.compare_meeting_item_lists(general_meetings_exp, p_item.get("general_meetings"))
+
+        section_meetings_exp = [
+            self.build_meeting_item(
+                "34353", "LE", "A00", None, "TuTh", datetime.time(15, 30),
+                datetime.time(16, 50), "RCLAS", "R87", instructor_exp, 
+                1
+            )
+        ]
+
+        self.compare_meeting_item_lists(section_meetings_exp, p_item.get("section_meetings"))
+
+        dated_meetings_exp = [
+            self.build_meeting_item(
+                None, "FI", None, "03/16/2021", "Tu", datetime.time(15, 0),
+                datetime.time(17, 59), "TBA", "TBA"
+            )
+        ]
+
+        self.compare_meeting_item_lists(dated_meetings_exp, p_item.get("dated_meetings  "))

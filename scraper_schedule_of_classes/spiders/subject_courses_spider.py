@@ -191,6 +191,7 @@ class SubjectCoursesSpider(scrapy.Spider):
         try:
             first_meeting_item = self.build_item_from_meeting(first_meeting_tag)
             loader.add_value("first_meeting", first_meeting_item)
+        # First main meeting invalid - usually because cancelled.
         except errors.ScraperError:
             return None
 
