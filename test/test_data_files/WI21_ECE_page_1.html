@@ -1,0 +1,4921 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+
+
+<title>Student/Class Info</title>
+<link rel="stylesheet" href="//www.ucsd.edu/common/cwp/active-cherry/base-min.css" />
+<style type="text/css">
+#tdr_banner {
+	background: transparent url(//students.ucsd.edu/_resources/current_students/css/images/triton-banner.png) center top no-repeat;
+	height: 52px;
+	margin: 0 auto;
+	max-width: 960px;
+	width: 98%;
+}
+
+body.fluid #tdr_banner {
+	max-width: none;
+}
+</style>
+<script src="//www.ucsd.edu/common/cwp/active-cherry/base-min.js"></script>
+<script src="//www.ucsd.edu/common/_emergency-broadcast/message.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+	
+	
+    <script type="text/javascript" src="/scheduleOfClasses/js/submit_form.js"></script>
+    
+<meta name="webapp.name" content="Instruction Tools" />
+<meta name="webapp.url" content="http://blink.ucsd.edu/instructors/index.html" />
+<meta name="display.crumbs" content="none" />
+<meta name="display.search" content="none" />
+
+<link href="/scheduleOfClasses/css/sch_classes.css" type="text/css"
+	rel="stylesheet" media="all" />
+<link
+	href="//www.ucsd.edu/common/cwp/active-cherry/lib/jquery.dataTables-1.9.0/jquery.dataTables-min.css"
+	media="all" rel="stylesheet" type="text/css" />
+<link
+	href="//www.ucsd.edu/common/cwp/active-cherry/lib/jquery-ui-1.8.18/jquery-ui-min.css"
+	media="all" rel="stylesheet" type="text/css" />
+
+<script
+	src="//www.ucsd.edu/common/cwp/active-cherry/lib/jquery-ui-1.8.18/jquery-ui-min.js"
+	type="text/javascript"></script>
+<script
+	src="//www.ucsd.edu/common/cwp/active-cherry/lib/jquery.dataTables-1.9.0/jquery.dataTables-min.js"
+	type="text/javascript"></script>
+
+
+
+
+<style type="text/css">
+td.brdr {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #D0D0D0;
+}
+
+td.ubrdr {
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: #D0D0D0;
+}
+
+table.tbrdr {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #D0D0D0;
+}
+</style>
+
+</head>
+
+<body
+    
+    >
+
+	
+
+
+
+
+
+
+
+
+<!-- env -->
+
+<!-- emergency -->
+<div id="uc-emergency"></div>
+<!-- skip to content -->
+<a class="skip-link" href="#tdr_content">Skip to content</a>
+<!-- login -->
+
+<div id="tdr_login" style="display: none"></div>
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function() {
+        $.ajax({
+            url: "https://a4.ucsd.edu/tritON/resources/bugscript.jsp?target=https%3A%2F%2Fwww.ucsd.edu&jsoncallback=?",
+            dataType: 'jsonp',
+            jsonpCallback: 'a4sso',
+            success: function(data) {
+                if (data.eduUcsdActLoggedin) {
+                    var url = "<div id=\"tdr_login_content\">You are logged in | <a href=\"/security/student/logout?url=";
+                    url += "http://blink.ucsd.edu";
+                    url += "\">Log Out</a></div>";
+                    $("#tdr_login").empty();
+                    $("#tdr_login").append(url);
+                    $("#tdr_login").attr("style", "display:block");
+                }
+            },
+            error: function(jqXHR, textStatus) {
+                console.log("error trying to communicate with a4 sso: " + textStatus);
+            }
+        });
+    });
+})(jQuery);
+</script>
+
+
+    <!-- title -->
+    <div id="tdr_title">
+        <div id="tdr_title_content">
+            <a id="tdr_title_ucsd_title" href="http://www.ucsd.edu">UC San Diego</a>
+            <div id="tdr_title_page_title">
+                <a href="http://blink.ucsd.edu/instructors/index.html">Instruction Tools </a>
+            </div>
+            <a id="tdr_title_search_link" class="search-button" style="display: none">Search</a>
+            <a id="tdr_title_menu_link">Menu</a>
+        </div>
+    </div>
+<!-- $Id: academic.jsp 1107 2020-04-24 17:54:17Z devhar $ -->
+<div id="tdr_nav" style="display: ">
+	<div id="tdr_nav_content">
+		<ul id="tdr_nav_list">
+			<li class="blink_nav_item"><a href="http://blink.ucsd.edu/">Blink</a></li>
+			<li><span>Student</span>
+				<ul>
+					<li><a href="/cgi-bin/blink.pl/2/faculty/student_name_lookup.pl?student_name_lookup=0&entry=0">Find a Student</a></li>
+					<li><a href="/cgi-bin/blink.pl/3/faculty/academic_history.pl">Academic History</a></li>
+					<li><a href="/studentAddresses/facultyView">Addresses</a></li>
+					<li><a href="/studentEnrolledClasses/facultyView">Classes and Wait List</a></li>
+					<li><a href="https://myccr.ucsd.edu/home.htm">Co-Curricular Record</a></li>
+					<li><a href="/studentDarsFacultyAudit/studentinfo.htm">Degree Audit</a></li>
+					<li><a href="/studentGpa/gpaFaculty">GPA Calculator</a></li>
+					<li><a href="/studentHolds/facultyView">Holds</a></li>
+					<li><a href="/studentMajorMinorChange/facultyView">Major and Minor</a></li>
+					<li><a href="/studentRegistration/status?registrationEvent=checkStatus">Registration Status</a></li>
+					<li><a href="/cgi-bin/blink.pl/2/faculty/audit/audit_jump.pl">Term Audit</a></li>
+					<li><a href="/cgi-bin/blink.pl/2/faculty/display_grid.pl">Weekly Planner</a></li>
+				</ul>
+			</li>
+			<li><span>Class/Major</span>
+				<ul>
+					<li><a href="/cgi-bin/blink.pl/2/faculty/advanced_class_list.pl">Class Lists</a></li> 
+					<li><a href="/egrades/egrades.htm">eGrades</a></li>
+					<li><a href="/cgi-bin/blink.pl/2/faculty/student/major_list.pl">Majors List</a></li>  
+					<li><a href="/cgi-bin/blink.pl/2/faculty/student/minor_list.pl">Minors List</a></li> 
+					<li><a href="/cgi-bin/blink.pl/2/faculty/resource/enroll_list.pl">Section Enrollments/Wait Lists</a></li>  
+					<li><a href="http://coursefinder.ucsd.edu">TritonEd/Canvas</a></li> 
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusClasslist3rdweek&queryType=query">Query: Campus Class List 3rd Week</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusClasslistStatistics3rdweek&queryType=query">Query: Campus Class List Statistics 3rd Week</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusStudentInformation3rdweek&queryType=query">Query: Campus Student Information 3rd Week</a></li>
+				</ul>
+			</li>
+			<li><span>Course Planning</span>
+				<ul>
+					<li><a href="http://acms.ucsd.edu/faculty/classroom-support/classroom-details.html">Classroom Details</a></li>
+					<li><a href="/ecourse/home.htm">eCourse</a></li>
+					<li><a href="/cgi-bin/blink.pl/2/faculty/schedule_of_classes.pl">Schedule of Classes</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusCourseInformation&queryType=query">Query: Campus Course Information</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusScheduleofClasses&queryType=query">Query: Schedule of Classes </a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=ECourseDrilldown&queryType=easyquery">Query: eCourse Drilldown</a></li>
+				</ul>
+			</li>			
+			<li><span>Resources</span>
+				<ul>
+					<li><a href="http://www.assist.org/web-assist/welcome.html">ASSIST</a></li>
+					<li><a href="/studentDarsSelfservice/batch/list.html">DARS 2.0 Batch</a></li>
+					<li><a href="/studentDarsDashboard/reports/reports-console.html">DARS 2.0 Reports</a></li>
+					<li><a href="https://myeap.eap.ucop.edu/Galileo/Service/CourseCatalog/CourseCatalog.aspx">EAP Course Finder</a></li>
+					<li><a href="https://act.ucsd.edu/cgi-bin/sis/tritonlink.log.pl">Statistics</a></li>
+				</ul>
+			</li>			
+			<li><span>Student Queries</span>
+				<ul>
+					<li><a href="https://bianalytics.ucsd.edu/ibmcognos/bi/?pathRef=.public_folders%2FStudent%2BQueries%2FCampus%2BAdmitted%2BStudents%2BQuery">Campus Admitted Students</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusClasslist&queryType=query">Campus Class List</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusClasslistStatistics&queryType=query">Campus Class List Statistics</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusEAPStudentInformation&queryType=query">Campus EAP Student Information</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusMajorMinorChange&queryType=query">Campus Major Minor Change</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusStudentInformation&queryType=query">Campus Student Information</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusWaitlist&queryType=query">Campus Wait List</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusWaitlistAudit&queryType=query">Campus Wait List Audit</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=CampusWithdrawalInformation&queryType=query">Campus Withdrawal Information</a></li>
+					<li><a href="/qlink/viewer?jlinkevent=QueryServer&queryModel=MissingPrerequisitesQuery&queryType=query">Missing Prerequisites</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+<div id="tdr_search" style="display: none">
+	<div id="tdr_search_content">
+		<form action="//act.ucsd.edu/cwp/tools/search-redir" method="get">
+			<label for="search-scope">Search</label> <select id="search-scope" name="search-scope">
+				<option selected="selected" value="tritonlink">This Site</option>
+				<option value="default_collection">All UCSD Sites</option>
+				<option value="faculty-staff">Faculty/Staff Directory</option>
+			</select> <label for="search-term" id="search-term-label">Search Term</label> <input type="search" id="search-term" name="search-term" size="20" /> <input type="submit" class="search-button" value="Search" />
+		</form>
+	</div>
+</div>
+<div id="tdr_crumbs" style="display: none">
+	<div id="tdr_crumbs_content">
+		<ul>
+			<li><a href="http://www.ucsd.edu/learn/academics/index.html">Academics</a></li>
+			
+		</ul>
+	</div>
+</div>
+<div id="tdr_content" class="tdr_fonts itag_webapp">
+	<div id="tdr_content_content">
+		
+	<div>
+		<h1>Schedule of Classes</h1>
+
+		<form id="socDisplayCVO" action="/scheduleOfClasses/scheduleOfClassesFacultyResult.htm?selectedSubjects=ECE&amp;selectedTerm=WI21&amp;schedOption1=true&amp;schedOption2=true&amp;page=1" method="post">
+			
+			<div class="msg confirm">
+				Your search was : <br>
+				<ul>
+					
+					<li>Term
+						<ul>
+							<li>Winter Quarter 2021</li>
+						</ul>
+					</li>
+				</ul>
+
+
+				<ul>
+					
+					
+						<li>Course subject
+							<ul>
+								
+									<li>ECE  - Electrical &amp; Computer Engineer</li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+
+				<ul>
+					
+					
+				</ul>
+
+
+				<ul>
+					
+					
+						<li>Course number is between
+							<ul>
+								
+									<li>1 and 99</li>
+								
+									<li>100 and 199</li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+
+				<ul>
+					
+					
+				</ul>
+
+
+				<ul>
+					
+					
+				</ul>
+
+
+				<ul>
+					
+					
+				</ul>
+
+
+				<ul>
+					
+					
+				</ul>
+
+
+				<ul>
+					
+					
+				</ul>
+				<ul>
+					
+					
+				</ul>
+				<ul>
+					
+					
+				</ul>
+			</div>
+
+
+			
+
+			
+				
+					<div>
+						<table width="100%">
+							<tbody>
+								<tr>
+									<td align="left"><a
+										href="/scheduleOfClasses/scheduleOfClassesFaculty.htm">Start
+											a new search</a></td>
+									<td align="center"><a
+										href="/scheduleOfClasses/scheduleOfClassesFacultyResultPrint.htm">Printer
+											Friendly</a></td>
+									<td align="right">Page (1&nbsp;of&nbsp;4) &nbsp;  
+											
+												
+				                        1&nbsp;
+				                    
+												
+											
+										
+											
+												
+												
+													<a
+														href="/scheduleOfClasses/scheduleOfClassesFacultyResult.htm?page=2">2&nbsp;</a>
+												
+											
+										
+											
+												
+												
+													<a
+														href="/scheduleOfClasses/scheduleOfClassesFacultyResult.htm?page=3">3&nbsp;</a>
+												
+											
+										
+											
+												
+												
+													<a
+														href="/scheduleOfClasses/scheduleOfClassesFacultyResult.htm?page=4">4&nbsp;</a>
+												
+											
+										 
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<br>
+					<table width="100%" class="tbrdr">
+						<thead>
+
+						</thead>
+						
+						
+
+							
+								
+									<tr>
+										<td colspan="13"><br>
+											<h2>
+												<span class="centeralign">Electrical &amp; Computer Engineering   </span>
+											</h2> </td>
+									</tr>
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+									<tr>
+										<td colspan="13"><br>
+											<h2>
+												<span class="centeralign">Electrical &amp; Computer Engineer (ECE  ) </span>
+											</h2> 
+												<br>
+												
+												 IMPORTANT LAB COURSE INFORMATION:
+ Students who enroll in the following ECE laboratory
+ courses will be charged a lab fee which will be
+ assessed with registration fees. This laboratory
+ fee will be: $10 for ECE 65, ECE 100, and ECE 163: $20
+ for ECE 25, ECE 35: $35 for ECE 136L, ECE 181,
+ ECE 182, ECE 183, ECE 184, ECE 185 and ECE 186L: $40
+ for ECE 138L: and $75 for ECE 5, ECE 16, ECE 115,
+ ECE 196.  Students will be able to enroll in any ECE
+ course through WebReg as long as they meet all course
+ prerequisites. If you need approval to enroll in a
+ class, please submit your request through the
+ Enrollment Authorization System (EASy).  Students who
+ drop a lab course before the end of the second week of
+ the quarter are eligible for a refund of the charged
+ lab fee.
+
+												<br>
+											 <span class="centeralign"><span class="bold_text">As
+													of: 03/26/2021, 03:22:00
+											</span></span> <br>
+										<br></td>
+									</tr>
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									<tr>
+										<td class="ubrdr" rowspan="2">R <br> <span
+											onmouseover="" style="cursor: pointer;" class="icon info"
+											onclick="javascript:openNewWindow('http://registrar.ucsd.edu/StudentLink/rstr_codes.html', 'info')"
+											title="info"></span></a></td>
+										<td class="ubrdr" rowspan="2">Course Number</td>
+										<td class="ubrdr" rowspan="2">Section ID<br>
+										<span onmouseover="" style="cursor: pointer;"
+											class="icon info"
+											onclick="javascript:openNewWindow('http://registrar.ucsd.edu/StudentLink/id_crse_codes.html', 'info')"
+											title="info"></span></td>
+										<td class="ubrdr" rowspan="2">Meeting Type<br>
+										<span onmouseover="" style="cursor: pointer;"
+											class="icon info"
+											onclick="javascript:openNewWindow('http://registrar.ucsd.edu/StudentLink/instr_codes.html', 'info')"
+											title="info"></span></td>
+										<td class="ubrdr" rowspan="2">Section</td>
+										<td class="ubrdr" rowspan="2">Days</td>
+										<td class="ubrdr" rowspan="2">Time</td>
+										<td class="ubrdr" rowspan="2" colspan="2">Building &
+											Room<br>
+										<span onmouseover="" style="cursor: pointer;"
+											class="icon info"
+											onclick="javascript:openNewWindow('http://registrar.ucsd.edu/StudentLink/bldg_codes.html', 'info')"
+											title="info"></span>
+										</td>
+										<td class="ubrdr" rowspan="2">Instructor</td>
+										<td class="ubrdr" colspan="2">Seats<span onmouseover=""
+											style="cursor: pointer;" class="icon info"
+											onclick="javascript:openNewWindow('http://registrar.ucsd.edu/StudentLink/avail_limit.html', 'info')"
+											title="info"></span></td>
+										<td class="ubrdr" rowspan="2">&nbsp;</td>
+									</tr>
+									<tr>
+
+										<td class="ubrdr">Available</td>
+										<td class="ubrdr">Limit</td>
+									</tr>
+								
+								
+
+
+								
+
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+											<tr>
+												<td class="crsheader"></td>
+												<td class="crsheader" align="">5</td>
+												<td colspan="11" class="crsheader">Intro to ECE                  </td>
+											</tr>
+											<tr>
+												<td class="nonenrtxt" colspan="2" align="right"></td>
+												<td class="nonenrtxt" colspan="11"><span class="ertext"> Students who enroll in ECE laboratory courses will be
+ charged a lab fee which will be assessed with
+ registration fees.This laboratory fee will be: $100
+ for ECE 5.
+</span></td>
+											</tr>
+										
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+																<td class="crsheader">
+																		<span id="crsRestCd" title="Open to Freshmen Only"> FR</span>
+																		<br>
+																	
+																		<span id="crsRestCd" title="Open to Juniors Only"> JR</span>
+																		<br>
+																	
+																		<span id="crsRestCd" title="Open to Sophomores Only"> SO</span>
+																		<br>
+																	</td>
+															
+															
+														
+														<td class="crsheader">5</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece5')"><span
+																		class="boldtxt">Intro to ECE                  </span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE5     ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32235')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+5','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">M      </td>
+																			<td class="brdr">1:00p-1:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R139 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=gAibC7L1OaoKYkL+3438GA==')">Morris, Karcher William            </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32236'>32236</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">WF     </td>
+																			<td class="brdr">12:00p-1:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R184 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=gAibC7L1OaoKYkL+3438GA==')">Morris, Karcher William            </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">13</td>
+																					<td class="brdr">35</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32236&term=WI21&subject=ECE &course=5','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32237'>32237</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A02</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">WF     </td>
+																			<td class="brdr">12:00p-1:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R185 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=gAibC7L1OaoKYkL+3438GA==')">Morris, Karcher William            </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">25</td>
+																					<td class="brdr">35</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32237&term=WI21&subject=ECE &course=5','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32238'>32238</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A03</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">WF     </td>
+																			<td class="brdr">2:00p-3:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R227 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=gAibC7L1OaoKYkL+3438GA==')">Morris, Karcher William            </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">23</td>
+																					<td class="brdr">35</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32238&term=WI21&subject=ECE &course=5','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32239'>32239</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A04</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">WF     </td>
+																			<td class="brdr">2:00p-3:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R228 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=gAibC7L1OaoKYkL+3438GA==')">Morris, Karcher William            </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">28</td>
+																					<td class="brdr">35</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32239&term=WI21&subject=ECE &course=5','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+															
+																<td class="crsheader"></td>
+															
+														
+														<td class="crsheader">15</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece15')"><span
+																		class="boldtxt">Engineering Computation       </span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE15    ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32242')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+15','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">TuTh     </td>
+																			<td class="brdr">9:30a-10:50a</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R138 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=B6jqf1dJqfKbWrXTixWVQg==')">Schurgers, Curt                    </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32243'>32243</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">W      </td>
+																			<td class="brdr">3:00p-3:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R165 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=B6jqf1dJqfKbWrXTixWVQg==')">Schurgers, Curt                    </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																					<td class="brdr"><span class="ertext">FULL<br>
+																							Waitlist(1)</span></td>
+																					<td class="brdr">180</td>
+																				
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32243&term=WI21&subject=ECE &course=15','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+													
+
+													
+													
+														<tr class="nonenrtxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Final">FI</span></td>
+															<td class="brdr">03/16/2021</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Tu      </td>
+																			<td class="brdr">8:00a-10:59a</td>
+																			<td class="brdr">TBA</td>
+																			<td class="brdr">TBA</td>
+																		
+																	
+
+																	<td class="brdr">
+																			
+																			
+																				
+																			
+																		</td>
+																	
+																		
+																		
+																			<td class="brdr" colspan="3">&nbsp;</td>
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+											<tr>
+												<td class="crsheader"></td>
+												<td class="crsheader" align="">16</td>
+												<td colspan="11" class="crsheader">Rapid Hardware &amp; Software Dsn </td>
+											</tr>
+											<tr>
+												<td class="nonenrtxt" colspan="2" align="right"></td>
+												<td class="nonenrtxt" colspan="11"><span class="ertext"> Students who enroll in ECE laboratory courses will be
+ charged a lab fee which will be assessed with
+ registration fees.This laboratory fee will be: $75
+ for ECE 16.
+</span></td>
+											</tr>
+										
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+																<td class="crsheader">
+																		<span id="crsRestCd" title="Open to Freshmen Only"> FR</span>
+																		<br>
+																	
+																		<span id="crsRestCd" title="Open to Sophomores Only"> SO</span>
+																		<br>
+																	</td>
+															
+															
+														
+														<td class="crsheader">16</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece16')"><span
+																		class="boldtxt">Rapid Hardware &amp; Software Dsn </span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE16    ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32245')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+16','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Tu      </td>
+																			<td class="brdr">9:00a-12:00p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R218 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=SIWQEyXpebTxtVL9/cjPYg==')">Wang, Edward Jay                   </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32246'>32246</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Th      </td>
+																			<td class="brdr">9:00a-12:00p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R248 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=SIWQEyXpebTxtVL9/cjPYg==')">Wang, Edward Jay                   </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">17</td>
+																					<td class="brdr">30</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32246&term=WI21&subject=ECE &course=16','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+													
+
+													
+													
+														<tr class="nonenrtxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Final">FI</span></td>
+															<td class="brdr">03/16/2021</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Tu      </td>
+																			<td class="brdr">8:00a-10:59a</td>
+																			<td class="brdr">TBA</td>
+																			<td class="brdr">TBA</td>
+																		
+																	
+
+																	<td class="brdr">
+																			
+																			
+																				
+																			
+																		</td>
+																	
+																		
+																		
+																			<td class="brdr" colspan="3">&nbsp;</td>
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+											<tr>
+												<td class="crsheader"></td>
+												<td class="crsheader" align="">25</td>
+												<td colspan="11" class="crsheader">Introduction to Digital Design</td>
+											</tr>
+											<tr>
+												<td class="nonenrtxt" colspan="2" align="right"></td>
+												<td class="nonenrtxt" colspan="11"><span class="ertext"> Students who enroll in ECE laboratory courses will be
+ charged a lab fee which will be assessed with
+ registration fees. This laboratory fee will be: $20
+ for ECE 25.
+</span></td>
+											</tr>
+										
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+															
+																<td class="crsheader"></td>
+															
+														
+														<td class="crsheader">25</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece25')"><span
+																		class="boldtxt">Introduction to Digital Design</span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE25    ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32247')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+25','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">MW     </td>
+																			<td class="brdr">5:00p-6:20p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R51  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=CQVhrkeE4vSZ+ywWdH3Y+w==')">Dey, Sujit                         </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">M      </td>
+																			<td class="brdr">4:00p-4:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R95  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=CQVhrkeE4vSZ+ywWdH3Y+w==')">Dey, Sujit                         </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A02</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">F      </td>
+																			<td class="brdr">12:00p-12:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R83  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=CQVhrkeE4vSZ+ywWdH3Y+w==')">Dey, Sujit                         </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32250'>32250</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A50</td>
+
+															
+																
+																
+																	
+																		
+																			<td class="brdr" colspan="4" align="center">TBA</td>
+																		
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=CQVhrkeE4vSZ+ywWdH3Y+w==')">Dey, Sujit                         </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">43</td>
+																					<td class="brdr">180</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32250&term=WI21&subject=ECE &course=25','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+													
+
+													
+													
+														<tr class="nonenrtxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Final">FI</span></td>
+															<td class="brdr">03/15/2021</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">M      </td>
+																			<td class="brdr">7:00p-9:59p</td>
+																			<td class="brdr">TBA</td>
+																			<td class="brdr">TBA</td>
+																		
+																	
+
+																	<td class="brdr">
+																			
+																			
+																				
+																			
+																		</td>
+																	
+																		
+																		
+																			<td class="brdr" colspan="3">&nbsp;</td>
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+															
+																<td class="crsheader"></td>
+															
+														
+														<td class="crsheader">30</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece30')"><span
+																		class="boldtxt">Intro to Computer Engineering </span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE30    ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32256')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+30','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">TuTh     </td>
+																			<td class="brdr">3:30p-4:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R72  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=4ybX40NxhndA1sPnBZJpkA==')">Mir Arabbaygi, Siavash             </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																			&nbsp;
+																		
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																	<td class="brdr" colspan="8" align="center"><span
+																		class="ertext">Cancelled</span></td>
+																
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																			&nbsp;
+																		
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A02</td>
+
+															
+																
+																	<td class="brdr" colspan="8" align="center"><span
+																		class="ertext">Cancelled</span></td>
+																
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A03</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">F      </td>
+																			<td class="brdr">10:00a-10:50a</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R118 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=4ybX40NxhndA1sPnBZJpkA==')">Mir Arabbaygi, Siavash             </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32259'>32259</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A50</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Tu      </td>
+																			<td class="brdr">7:00p-10:00p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R111 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=4ybX40NxhndA1sPnBZJpkA==')">Mir Arabbaygi, Siavash             </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">5</td>
+																					<td class="brdr">31</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32259&term=WI21&subject=ECE &course=30','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32260'>32260</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A51</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">W      </td>
+																			<td class="brdr">4:00p-7:00p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R165 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=4ybX40NxhndA1sPnBZJpkA==')">Mir Arabbaygi, Siavash             </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">3</td>
+																					<td class="brdr">31</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32260&term=WI21&subject=ECE &course=30','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32261'>32261</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A52</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">W      </td>
+																			<td class="brdr">7:00p-10:00p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R03  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=4ybX40NxhndA1sPnBZJpkA==')">Mir Arabbaygi, Siavash             </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">8</td>
+																					<td class="brdr">31</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32261&term=WI21&subject=ECE &course=30','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32262'>32262</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A53</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Th      </td>
+																			<td class="brdr">7:00p-10:00p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R107 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=4ybX40NxhndA1sPnBZJpkA==')">Mir Arabbaygi, Siavash             </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">4</td>
+																					<td class="brdr">31</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32262&term=WI21&subject=ECE &course=30','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32263'>32263</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A54</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">F      </td>
+																			<td class="brdr">7:00p-10:00p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R04  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=4ybX40NxhndA1sPnBZJpkA==')">Mir Arabbaygi, Siavash             </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">3</td>
+																					<td class="brdr">31</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32263&term=WI21&subject=ECE &course=30','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+													
+
+													
+													
+														<tr class="nonenrtxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Final">FI</span></td>
+															<td class="brdr">03/16/2021</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Tu      </td>
+																			<td class="brdr">3:00p-5:59p</td>
+																			<td class="brdr">TBA</td>
+																			<td class="brdr">TBA</td>
+																		
+																	
+
+																	<td class="brdr">
+																			
+																			
+																				
+																			
+																		</td>
+																	
+																		
+																		
+																			<td class="brdr" colspan="3">&nbsp;</td>
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+											<tr>
+												<td class="crsheader"></td>
+												<td class="crsheader" align="">35</td>
+												<td colspan="11" class="crsheader">Introduction to Analog Design </td>
+											</tr>
+											<tr>
+												<td class="nonenrtxt" colspan="2" align="right"></td>
+												<td class="nonenrtxt" colspan="11"><span class="ertext"> Students who enroll in ECE laboratory courses will be
+ charged a lab fee which will be assessed with
+ registration fees. This laboratory fee will be: $20
+ for ECE 35.
+</span></td>
+											</tr>
+										
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+															
+																<td class="crsheader"></td>
+															
+														
+														<td class="crsheader">35</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece35')"><span
+																		class="boldtxt">Introduction to Analog Design </span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE35    ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32264')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+35','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">TuTh     </td>
+																			<td class="brdr">12:30p-1:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R71  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=B6jqf1dJqfKbWrXTixWVQg==')">Schurgers, Curt                    </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">W      </td>
+																			<td class="brdr">4:00p-4:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R103 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=B6jqf1dJqfKbWrXTixWVQg==')">Schurgers, Curt                    </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A02</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">F      </td>
+																			<td class="brdr">10:00a-10:50a</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R134 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=B6jqf1dJqfKbWrXTixWVQg==')">Schurgers, Curt                    </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32267'>32267</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A50</td>
+
+															
+																
+																
+																	
+																		
+																			<td class="brdr" colspan="4" align="center">TBA</td>
+																		
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=B6jqf1dJqfKbWrXTixWVQg==')">Schurgers, Curt                    </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">65</td>
+																					<td class="brdr">210</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32267&term=WI21&subject=ECE &course=35','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+													
+
+													
+													
+														<tr class="nonenrtxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Final">FI</span></td>
+															<td class="brdr">03/16/2021</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Tu      </td>
+																			<td class="brdr">11:30a-2:29p</td>
+																			<td class="brdr">TBA</td>
+																			<td class="brdr">TBA</td>
+																		
+																	
+
+																	<td class="brdr">
+																			
+																			
+																				
+																			
+																		</td>
+																	
+																		
+																		
+																			<td class="brdr" colspan="3">&nbsp;</td>
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+															
+																<td class="crsheader"></td>
+															
+														
+														<td class="crsheader">45</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece45')"><span
+																		class="boldtxt">Circuits and Systems          </span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE45    ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32274')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+45','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">TuTh     </td>
+																			<td class="brdr">11:00a-12:20p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R84  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=llXmtLzql/6HkBRZ9sIRTA==')">Zeger, Kenneth A.                  </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32275'>32275</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">M      </td>
+																			<td class="brdr">3:00p-3:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R107 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=llXmtLzql/6HkBRZ9sIRTA==')">Zeger, Kenneth A.                  </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">23</td>
+																					<td class="brdr">122</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32275&term=WI21&subject=ECE &course=45','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32276'>32276</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A02</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">F      </td>
+																			<td class="brdr">2:00p-2:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R59  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=llXmtLzql/6HkBRZ9sIRTA==')">Zeger, Kenneth A.                  </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">22</td>
+																					<td class="brdr">119</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32276&term=WI21&subject=ECE &course=45','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+													
+
+													
+													
+														<tr class="nonenrtxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Final">FI</span></td>
+															<td class="brdr">03/18/2021</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Th      </td>
+																			<td class="brdr">11:30a-2:29p</td>
+																			<td class="brdr">TBA</td>
+																			<td class="brdr">TBA</td>
+																		
+																	
+
+																	<td class="brdr">
+																			
+																			
+																				
+																			
+																		</td>
+																	
+																		
+																		
+																			<td class="brdr" colspan="3">&nbsp;</td>
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+											<tr>
+												<td class="crsheader"></td>
+												<td class="crsheader" align="">65</td>
+												<td colspan="11" class="crsheader">Components &amp; Circuits Lab     </td>
+											</tr>
+											<tr>
+												<td class="nonenrtxt" colspan="2" align="right"></td>
+												<td class="nonenrtxt" colspan="11"><span class="ertext"> Students who enroll in ECE laboratory courses will be
+ charged a lab fee which will be assessed with
+ registration fees.This laboratory fee will be: $10
+ for ECE 65.
+</span></td>
+											</tr>
+										
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+															
+																<td class="crsheader"></td>
+															
+														
+														<td class="crsheader">65</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece65')"><span
+																		class="boldtxt">Components &amp; Circuits Lab     </span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE65    ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32277')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+65','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">MWF    </td>
+																			<td class="brdr">1:00p-1:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R53  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=3RPu8IhUe/lpKAnPYsaK6Q==')">Baghdadchi, Saharnaz               </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">W      </td>
+																			<td class="brdr">9:00a-9:50a</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R113 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=3RPu8IhUe/lpKAnPYsaK6Q==')">Baghdadchi, Saharnaz               </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A02</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">F      </td>
+																			<td class="brdr">12:00p-12:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R104 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=3RPu8IhUe/lpKAnPYsaK6Q==')">Baghdadchi, Saharnaz               </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32280'>32280</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Laboratory">LA</span></td>
+															<td class="brdr">A50</td>
+
+															
+																
+																
+																	
+																		
+																			<td class="brdr" colspan="4" align="center">TBA</td>
+																		
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=3RPu8IhUe/lpKAnPYsaK6Q==')">Baghdadchi, Saharnaz               </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">20</td>
+																					<td class="brdr">185</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32280&term=WI21&subject=ECE &course=65','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+													
+
+													
+													
+														<tr class="nonenrtxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Final">FI</span></td>
+															<td class="brdr">03/19/2021</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">F      </td>
+																			<td class="brdr">11:30a-2:29p</td>
+																			<td class="brdr">TBA</td>
+																			<td class="brdr">TBA</td>
+																		
+																	
+
+																	<td class="brdr">
+																			
+																			
+																				
+																			
+																		</td>
+																	
+																		
+																		
+																			<td class="brdr" colspan="3">&nbsp;</td>
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+							
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+								
+
+
+								
+
+								
+									
+										
+										
+											
+												
+												
+													
+													<tr>
+														
+															
+															
+																<td class="crsheader"></td>
+															
+														
+														<td class="crsheader">101</td>
+
+														<td class="crsheader" colspan="5">
+																
+																
+															 
+																
+																	
+
+																	
+
+																	
+
+																	
+
+																	
+																		
+																	
+
+																
+															 
+																
+																	<a href="javascript:openNewWindow('http://www.ucsd.edu/catalog/courses/ECE.html#ece101')"><span
+																		class="boldtxt">Linear Systems Fundamentals   </span> </a>
+																
+
+																
+															 ( 4  Units) <br>                               
+															 </td>
+														<td class="crsheader" colspan="6" align="right"><span
+															class="boldtxt" onmouseover="" style="cursor: pointer;"
+															onclick="JavaScript:openNewWindow('/scheduleOfClasses/scheduleOfClassesPreReq.htm?termCode=WI21&courseId=ECE101   ');">Prerequisites</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://courses.ucsd.edu/coursemain.asp?section=32286')">Resources</span>&nbsp;|&nbsp;
+															<span class="boldtxt" onmouseover=""
+															style="cursor: pointer;"
+															onclick="javascript:openNewWindow('http://cape.ucsd.edu/responses/Results.aspx?courseNumber=ECE+101','CAPE')"><span
+																title="CAPE - Course and Professor Evaluations">Evaluations</span></span></td>
+													</tr>
+												
+											
+										
+									
+
+
+									
+
+									
+
+									
+									
+
+									
+										
+										
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Lecture">LE</span></td>
+															<td class="brdr">A00</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">TuTh     </td>
+																			<td class="brdr">11:00a-12:20p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R102 </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=3RPu8IhUe/lpKAnPYsaK6Q==')">Baghdadchi, Saharnaz               </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																				
+																				
+																			
+																			
+																				
+																					<td class="brdr"><span class="ertext">&nbsp;</span></td>
+																				
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32287'>32287</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A01</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">F      </td>
+																			<td class="brdr">9:00a-9:50a</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R98  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=3RPu8IhUe/lpKAnPYsaK6Q==')">Baghdadchi, Saharnaz               </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">34</td>
+																					<td class="brdr">100</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32287&term=WI21&subject=ECE &course=101','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+														<tr class="sectxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr">
+																	
+																		
+																		
+																			<a
+																				href='/FacultyClasslist/selectedsectionhome.htm?schCurrentTerm=WI21&sectionId=32288'>32288</a>
+																		
+																	
+																</td>
+															<td class="brdr"><span id="insTyp"
+																title="Discussion">DI</span></td>
+															<td class="brdr">A02</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">M      </td>
+																			<td class="brdr">5:00p-5:50p</td>
+																			<td class="brdr">RCLAS</td>
+																			<td class="brdr">R50  </td>
+																		
+																	
+																	
+																		
+																			<td class="brdr">
+																					
+																						
+																							
+																								
+																									<a href="#!" onclick="javascript:sendMail('/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?pid=3RPu8IhUe/lpKAnPYsaK6Q==')">Baghdadchi, Saharnaz               </a>
+																								
+																								
+																							
+																							<br>
+																						
+																					
+																					
+																				</td>
+																			
+																				
+																				
+																				
+																				
+																					<td class="brdr">46</td>
+																					<td class="brdr">100</td>
+																				
+																			
+																			
+																				
+																				
+																					<td class="brdr"><span onmouseover=""
+																						style="cursor: pointer;"
+																						onclick="JavaScript:openNewWindow('https://ucsdbkst.ucsd.edu/wrtx/TextSearch?section=32288&term=WI21&subject=ECE &course=101','bookstore');">
+																							<img src="/scheduleOfClasses/images/book.gif"
+																							height="20" width="20" />
+																					</span></td>
+																				
+																			
+																		
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+													
+													
+													
+
+												
+											
+												
+													
+													
+
+													
+													
+														<tr class="nonenrtxt">
+															<td class="brdr" colspan="2" border="0"></td>
+
+															<td class="brdr"></td>
+															<td class="brdr"><span id="insTyp"
+																title="Final">FI</span></td>
+															<td class="brdr">03/18/2021</td>
+
+															
+																
+																
+																	
+																		
+																		
+																			<td class="brdr">Th      </td>
+																			<td class="brdr">11:30a-2:29p</td>
+																			<td class="brdr">TBA</td>
+																			<td class="brdr">TBA</td>
+																		
+																	
+
+																	<td class="brdr">
+																			
+																			
+																				
+																			
+																		</td>
+																	
+																		
+																		
+																			<td class="brdr" colspan="3">&nbsp;</td>
+																		
+																	
+																
+															
+														</tr>
+														
+													
+													
+
+												
+											
+										
+									
+									
+									
+								
+							
+						
+
+					</table>
+					<br>
+					<div>
+						<table width="100%">
+							<tbody>
+								<tr>
+									<td align="left"><a
+										href="/scheduleOfClasses/scheduleOfClassesFaculty.htm">Start
+											a new search</a></td>
+									<td align="center"><a
+										href="/scheduleOfClasses/scheduleOfClassesFacultyResultPrint.htm">Printer
+											Friendly</a></td>
+									<td align="right">Page (1&nbsp;of&nbsp;4) &nbsp;  
+											
+												
+					                        1&nbsp;
+					                    
+												
+											
+										
+											
+												
+												
+													<a
+														href="/scheduleOfClasses/scheduleOfClassesFacultyResult.htm?page=2">2&nbsp;</a>
+												
+											
+										
+											
+												
+												
+													<a
+														href="/scheduleOfClasses/scheduleOfClassesFacultyResult.htm?page=3">3&nbsp;</a>
+												
+											
+										
+											
+												
+												
+													<a
+														href="/scheduleOfClasses/scheduleOfClassesFacultyResult.htm?page=4">4&nbsp;</a>
+												
+											
+										 
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						
+					</div>
+				
+				
+				
+			
+
+			<script>
+			function openNewWindow (url, name) {
+				if (navigator.appName == "Microsoft Internet Explorer") {
+						window.open(url, name, "width=640,height=480,scrollbars=yes,resizable=yes,menubar=no,status=yes,location=no,toolbar=no");
+				}
+				else {
+						win = window.open(url, name, "width=640,height=480,scrollbars=yes,resizable=yes,menubar=no,status=yes,location=no,toolbar=no");
+						win.focus();
+				}
+			}
+		/* 	(function sendMail (myId) {
+				alert(myId);
+				var url = myId;
+				url = "/CCESReplay/LogTransaction.htm?" + input   //cceTrigTrans.htm
+				doSyncAjax("GET", url, {}, function(data, alert) {
+					console.log(data);
+					allStudents = data;// JSON.parse(data);
+					var html = allStudents;
+				
+				})(jQuery); */
+
+				/* (function sendMail (myId) {
+					alert(myId);
+				
+					var url = myId;
+				//	url = "/CCESReplay/LogTransaction.htm?" + input   //cceTrigTrans.htm
+					doSyncAjax("GET", url, {}, function(data, alert) {
+						console.log(data);
+						allStudents = data;// JSON.parse(data);
+						var html = allStudents;
+						
+					})
+				}); */
+				
+		
+		/* 	$("#sendMail").on('click',function(){
+			
+				var input = $(this).attr ;
+				url = "/scheduleOfClasses/scheduleOfClassesFacultyEmailResult.htm?"+input
+				doSyncAjax("GET", url, {}, function(data, alert) {
+					console.log(data);
+					allStudents = data;
+					var html = allStudents;		
+				});
+			} */
+			
+			
+			(function($) {
+				$(document).ready(function() {
+				
+				
+				//data table
+					$("#socDeptTab").dataTable({
+						"bPaginate" : true,
+						"bLengthChange": false,
+						"bFilter": false,
+						"bInfo": false,
+						"bSort": false,
+						"bJQueryUI": true,
+						"sPaginationType": "full_numbers",
+						"iDisplayLength": 2,
+	
+						"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+							 var color1 = 'white';
+							 $(nRow).css('background-color', color1);
+							 $("#socDeptTab thead").remove();
+						}
+					});
+					
+						//data table
+					/*$(".datatable").dataTable({
+						"bPaginate" : true,
+						"bLengthChange": true,
+						"bFilter": false,
+						"bInfo": true,
+						"sPaginationType": "full_numbers",
+						"bJQueryUI": true,
+						"iDisplayLength": 10,
+					});*/
+				});
+			})(jQuery);
+		</script>
+		</form>
+	</div>
+
+	</div>
+</div>
+<!-- footer -->
+<div id="tdr_footer">
+	<div id="tdr_footer_content">
+		<div>UC San Diego 9500 Gilman Dr. La Jolla, CA 92093 (858) 534-2230</div>
+		<div>
+			Copyright &copy;<span id="tdr_copyright_year">2015</span> Regents of the University of California. All rights reserved.
+		</div>
+		<ul id="tdr_footer_links">
+			<li><a href="http://www.ucsd.edu/_about/legal/index.html">Terms &amp; Conditions</a></li>
+			<li id="tdr_footer_feedback" class="last"><a href="//act.ucsd.edu/cwp/feedback/tool/apps"
+				onclick="window.open('//act.ucsd.edu/cwp/feedback/tool/apps', 'DYGWYW', 'menubar=0,resizable=1,scrollbars=1,width=450,height=650');" target="DYGWYW">Feedback</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- shib timeout -->
+<img src="https://a4.ucsd.edu/tritON/imagebug" alt=" " style="display: none;" />
+<!-- google analytic -->
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', "UA-24480055-22"]);
+  _gaq.push(['_setDomainName', "ucsd.edu"]);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+</html>

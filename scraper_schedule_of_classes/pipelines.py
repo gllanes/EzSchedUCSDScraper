@@ -119,12 +119,12 @@ class CourseCleanerPipeline:
             if nonenrtxt_item.get("date"):
                 course_loader.add_value("dated_meetings", nonenrtxt_item)
             elif nonenrtxt_item.get("number") == section_group:
-                sectxt_item["essential"] = True
+                nonenrtxt_item["essential"] = True
                 course_loader.add_value("general_meetings", nonenrtxt_item)
 
             # I don't think this case is possible, but better to check anyway.
             else: 
-                sectxt_item["essential"] = False
+                nonenrtxt_item["essential"] = False
                 course_loader.add_value("general_meetings", nonenrtxt_item)
 
 

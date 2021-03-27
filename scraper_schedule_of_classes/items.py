@@ -13,7 +13,7 @@ from itemloaders.processors \
 import scraper_schedule_of_classes.errors as errors
 
 
-class MeetingUncategorized(Item):
+class Meeting(Item):
     """
     A scrapy item representing the information of an individual meeting.
     Uncategorized - each meeting is not yet assigned as:
@@ -39,7 +39,7 @@ def filter_empty_string(s):
     return s
 
 
-class MeetingUncategorizedLoader(ItemLoader):
+class MeetingLoader(ItemLoader):
     """
     ItemLoader for the MeetingUncategorized item.
     """
@@ -75,23 +75,6 @@ class CourseMeetingsUncategorizedLoader(ItemLoader):
     first_meeting_out = TakeFirst()
     sectxt_meetings_out = nonenrtxt_meetings_out \
         = Identity()
-
-
-class Meeting(Item):
-    sec_id = Field()
-    type_ = Field()
-    number = Field()
-    date = Field()
-    days = Field()
-    start_time = Field()
-    end_time = Field()
-    bldg = Field()
-    room = Field()
-    seats_avail = Field()
-
-
-class MeetingLoader(ItemLoader):
-    default_output_processor = TakeFirst()
 
 
 class CourseMeetings(Item):
