@@ -22,23 +22,22 @@ class TestCourseCleanerPipeline(MeetingComparator):
     
     @classmethod
     def setUpClass(cls):
-        cls.quarter_code = "WI21"
-        cls.subject_code = "PHYS"
-        page_num = 8
-
-        cls.spider_parser_items = get_spider_parser_items(cls.quarter_code, cls.subject_code, page_num)
         cls.pipeline = CourseCleanerPipeline()
 
 
     def test_all_nonenrtxt_meeting_types(self):
         # PHYS 4D A00
-        item = self.spider_parser_items[2]
+        quarter_code = "WI21"
+        subject_code = "PHYS"
+        page_num = 8
+        spider_parser_items = get_spider_parser_items(quarter_code, subject_code, page_num)
+        item = spider_parser_items[2]
         p_item = self.pipeline.process_item(item, None)
 
         instructor_exp = "Frano Pereira, Alex M"
         # Section group information is correct.
-        self.assertEqual(p_item.get("quarter_code"), self.quarter_code)
-        self.assertEqual(p_item.get("subj_code"), self.subject_code)
+        self.assertEqual(p_item.get("quarter_code"), quarter_code)
+        self.assertEqual(p_item.get("subj_code"), subject_code)
         self.assertEqual(p_item.get("number"), "4D")
         self.assertEqual(p_item.get("title"), "Phys Majrs-EM Wav,Spec Rel,Opt")
         self.assertEqual(p_item.get("section_group_code"), "A00")
@@ -202,4 +201,4 @@ class TestCourseCleanerPipeline(MeetingComparator):
             )
         ]
 
-        self.compare_meeting_item_lists(dated_meetings_exp, p_item.get("dated_meetings  "))
+        self.compare_meeting_item_lists(dated_meetings_exp, p_item.get("dated_meetings"))
