@@ -46,10 +46,15 @@ class SubjectCleanerPipeline:
             })
 
         # Store in database.
-        self.DA.insert_subjects(subjects_codes_names)
+        try:
+            self.DA.insert_subjects(subjects_codes_names)
+            self.DA.commit()
+        except Exception as e:
+            self.DA.rollback()
+            raise e
 
         return {
-            "message": "Subjects successfuly saved."
+            "message": "Subjects successfully saved."
         }
 
     def open_spider(self, spider):
@@ -136,4 +141,23 @@ class CoursePersistencePipeline:
     Given an item from the CourseCleanerPipeline, save all the information
     about this course/section group to the database.
     """
-    pass
+
+    def open_spider(self, spider):
+        self.DA = DataAccess()
+
+    def close_spider(self, spider):
+        self.DA.close()
+
+    def process_item(self, item, spider):
+        
+        try:
+            self.DA.insert_section_group_all_info(item) 
+            self.DA.commit()
+
+        except Exception as e:
+            self.DA.rollback()
+            raise e
+
+        # Insert course offering, section group, and meetings.
+        # All of this should take place in one transaction, preferably.
+        pass

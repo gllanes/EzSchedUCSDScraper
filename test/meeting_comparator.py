@@ -39,10 +39,12 @@ class MeetingComparator(unittest.TestCase):
 
 
     def compare_meeting_items(self, first, second):
+        # 
         for key in first.keys():
             self.assertEqual(first.get(key), second.get(key))
         for key in second.keys():
             self.assertEqual(first.get(key), second.get(key))
+
 
     def compare_meeting_item_lists(self, first, second):
         for i, (first_meeting, second_meeting) in enumerate(zip_longest(first, second)):

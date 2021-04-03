@@ -49,7 +49,8 @@ class SubjectCoursesSpider(scrapy.Spider):
     name = "subject_courses"
     custom_settings = {
         "ITEM_PIPELINES": {
-            "scraper_schedule_of_classes.pipelines.CourseCleanerPipeline": 100
+            "scraper_schedule_of_classes.pipelines.CourseCleanerPipeline": 100,
+            "scraper_schedule_of_classes.pipelines.CoursePersistencePipeline": 200, 
         }
     }
 
