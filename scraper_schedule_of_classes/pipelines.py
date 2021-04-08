@@ -130,7 +130,7 @@ class CourseCleanerPipeline:
         course_item = course_loader.load_item()
         if not course_item.get("section_meetings"):
             err_msg = f"{item.get('quarter_code')} {item.get('subj_code')} "\
-                f"{item.get('number')} {section_group}: no valid sectxt"
+                f"{item.get('number')} {section_group}: no valid sectxt {item}"
             raise DropItem(err_msg)
 
         return course_item
@@ -157,7 +157,3 @@ class CoursePersistencePipeline:
         except Exception as e:
             self.DA.rollback()
             raise e
-
-        # Insert course offering, section group, and meetings.
-        # All of this should take place in one transaction, preferably.
-        pass

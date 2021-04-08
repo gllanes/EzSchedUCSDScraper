@@ -7,10 +7,11 @@ import psycopg2.pool as pgpool
 from dotenv import load_dotenv
 
 load_dotenv()
-DB_CONNECTION_STR = "dbname={} user={}".format(
-    os.getenv("DB_NAME_LOCAL"),
-    os.getenv("DB_USER_LOCAL")
-)
+DB_USER=os.getenv("DB_USER")
+DB_PASSWORD=os.getenv("DB_PASSWORD")
+DB_NAME=os.getenv("DB_NAME")
+DB_HOST=os.getenv("DB_HOST")
+DB_PORT=os.getenv("DB_PORT")
 
 DB_DIR = pathlib.Path(__file__).parent.absolute()
 
@@ -23,7 +24,13 @@ class DataAccess:
         """
         Acquire database connection.
         """            
-        self.conn = pg.connect(DB_CONNECTION_STR)
+        self.conn = pg.connect(
+            user=DB_USER,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT,
+            dbname=DB_NAME
+        )
 
         # various prepared statements for inserting.
         insert_course_prepare = open(DB_DIR / "insert_course_prepare.sql", "r").read()
