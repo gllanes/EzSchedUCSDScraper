@@ -4,34 +4,27 @@ import pathlib
 import psycopg2 as pg
 import psycopg2.extras as pg_extras
 import psycopg2.pool as pgpool
-from dotenv import load_dotenv
+import psycopg2.errors
 
-load_dotenv()
-DB_USER=os.getenv("DB_USER")
-DB_PASSWORD=os.getenv("DB_PASSWORD")
-DB_NAME=os.getenv("DB_NAME")
-DB_HOST=os.getenv("DB_HOST")
-DB_PORT=os.getenv("DB_PORT")
+from scraper_schedule_of_classes.db.config \
+    import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
 
 DB_DIR = pathlib.Path(__file__).parent.absolute()
 
 class DataAccess:
-    
-    # There is going to be one thread to scrape each page.
-    # Keep one connection and cursor per thread.
-    
-    def __init__(self):
-        """
-        Acquire database connection.
-        """            
-        self.conn = pg.connect(
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            dbname=DB_NAME
-        )
 
+    conn_pool = pgpool.ThreadedConnectionPool(1, 20,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        host=DB_HOST,
+        port=DB_PORT,
+        dbname=DB_NAME)
+    
+    
+    @classmethod
+    def get_conn(cls):
+        conn = cls.conn_pool.getconn()
+        
         # various prepared statements for inserting.
         insert_course_prepare = open(DB_DIR / "insert_course_prepare.sql", "r").read()
         insert_course_offering_prepare = open(DB_DIR / "insert_course_offering_prepare.sql", "r").read()
@@ -40,46 +33,57 @@ class DataAccess:
         insert_general_meeting_prepare = open(DB_DIR / "insert_general_meeting_prepare.sql", "r").read()
         insert_dated_meeting_prepare = open(DB_DIR / "insert_dated_meeting_prepare.sql", "r").read()
 
+        # prepare statements if they have not already been prepared for this connection.
+        try:
+            with conn:
+                with conn.cursor() as cur:
+                    cur.execute(insert_course_prepare)
+                    cur.execute(insert_course_offering_prepare)
+                    cur.execute(insert_section_group_prepare)
+                    cur.execute(insert_section_meeting_prepare)
+                    cur.execute(insert_general_meeting_prepare)
+                    cur.execute(insert_dated_meeting_prepare)
 
-        # prepare all statements for this session
-        with self.conn:
-            with self.conn.cursor() as cur:
-                cur.execute(insert_course_prepare)
-                cur.execute(insert_course_offering_prepare)
-                cur.execute(insert_section_group_prepare)
-                cur.execute(insert_section_meeting_prepare)
-                cur.execute(insert_general_meeting_prepare)
-                cur.execute(insert_dated_meeting_prepare)
+        # duplicate prepared statement
+        except psycopg2.errors.lookup('42P05'):
+            pass
 
-
-    def commit(self):
-        self.conn.commit()
-
-    def rollback(self):
-        self.conn.rollback()
+        return conn
 
     
-    def execute_str(self, query_str, values = None, do_return = False):
+    @classmethod
+    def put_conn(cls, conn):
+        cls.conn_pool.putconn(conn)
+
+    
+    @classmethod
+    def close(cls):
+        cls.conn_pool.closeall()
+
+    
+    @staticmethod
+    def execute_str(conn, query_str, values = None, do_return = False):
 
         returning = None
         
-        with self.conn:
-            with self.conn.cursor() as cur:
-                cur.execute(query_str, values)
-                if do_return:
-                    returning = cur.fetchall()
+        with conn.cursor() as cur:
+            cur.execute(query_str, values)
+            if do_return:
+                returning = cur.fetchall()
 
         return returning
 
 
-    def execute_str_batch(self, query_str, values_list):
+    @staticmethod
+    def execute_str_batch(conn, query_str, values_list):
 
-        with self.conn.cursor() as cur:
+        with conn.cursor() as cur:
             pg_extras.execute_batch(cur, query_str, values_list, 
                 page_size=len(values_list))
 
 
-    def insert_quarter(self, code, name):
+    @classmethod
+    def insert_quarter(cls, conn, code, name):
 
         query_str = """
             INSERT INTO quarter (code, name)
@@ -89,10 +93,11 @@ class DataAccess:
         """
         values = (code, name)
         
-        self.execute_str(query_str, values)
+        cls.execute_str(conn, query_str, values)
 
 
-    def insert_subjects(self, subject_codes_names):
+    @classmethod
+    def insert_subjects(cls, conn, subject_codes_names):
         """
         subject_codes_names is an array of entries of the following
         format:
@@ -111,10 +116,11 @@ class DataAccess:
 
         # Build a tuple for each entry
         subject_codes_names_params = [(scn["code"], scn["name"]) for scn in subject_codes_names]
-        self.execute_str_batch(query_str, subject_codes_names_params)
+        cls.execute_str_batch(conn, query_str, subject_codes_names_params)
             
 
-    def get_all_subjects(self):
+    @classmethod
+    def get_all_subjects(cls, conn):
         """
         retrieve all existing subjects in the database.
 
@@ -126,26 +132,27 @@ class DataAccess:
             SELECT code from subject;
         """
 
-        result = self.execute_str(query_str)
+        result = cls.execute_str(conn, query_str, do_return=True)
         subject_codes = [code for (code, ) in result]
         return subject_codes
 
 
-    def insert_section_group_all_info(self, item):
+    @classmethod
+    def insert_section_group_all_info(cls, conn, item):
         """
         Given an item from the course persistence pipeline, insert
         all information from that item (course, offering, section, meetings.)
         """
         # Insert course.
-        course_id = self.insert_course(item.get("subj_code"), 
+        course_id = cls.insert_course(conn, item.get("subj_code"), 
             item.get("number"), item.get("title"))
 
         # Insert course offering.
-        course_offering_id = self.insert_course_offering(course_id,
+        course_offering_id = cls.insert_course_offering(conn, course_id,
             item.get("quarter_code"))
 
         # Insert section group
-        section_group_id = self.insert_section_group(course_offering_id,
+        section_group_id = cls.insert_section_group(conn, course_offering_id,
             item.get("section_group_code"), item.get("instructor"))
 
         section_meetings = item.get("section_meetings")
@@ -155,7 +162,7 @@ class DataAccess:
             m_item.get("room"), m_item.get("number"), m_item.get("seats_avail"))
             for m_item in section_meetings
         ]
-        self.insert_section_meetings(section_meeting_vals)
+        cls.insert_section_meetings(conn, section_meeting_vals)
 
         general_meetings = item.get("general_meetings")
         if general_meetings:
@@ -165,7 +172,7 @@ class DataAccess:
                 m_item.get("room"), m_item.get("number"), m_item.get("essential"))
                 for m_item in general_meetings
             ]
-            self.insert_general_meetings(general_meeting_vals)
+            cls.insert_general_meetings(conn, general_meeting_vals)
 
         dated_meetings = item.get("dated_meetings")
         if dated_meetings:
@@ -175,10 +182,11 @@ class DataAccess:
                 m_item.get("room"), m_item.get("date"))
                 for m_item in dated_meetings
             ]
-            self.insert_dated_meetings(dated_meeting_vals)
+            cls.insert_dated_meetings(conn, dated_meeting_vals)
 
     
-    def insert_course(self, subject_code, number, title):
+    @classmethod
+    def insert_course(cls, conn, subject_code, number, title):
         """
         Insert the course given by the combination
         (subject_code, number, title)
@@ -189,34 +197,37 @@ class DataAccess:
         # prepared statement parameters: (subject_code, number, title)
 
         values = (subject_code, number, title)
-        with self.conn.cursor() as cur:
+        with conn.cursor() as cur:
             cur.execute("EXECUTE insert_course (%s, %s, %s)", values)
             course_id = cur.fetchone()[0]
         
         return course_id
         
 
-    def insert_course_offering(self, course_id, quarter_code):
+    @staticmethod
+    def insert_course_offering(conn, course_id, quarter_code):
 
         values = (course_id, quarter_code)
-        with self.conn.cursor() as cur:
+        with conn.cursor() as cur:
             cur.execute("EXECUTE insert_course_offering (%s, %s)", values)
             course_offering_id = cur.fetchone()[0]
 
         return course_offering_id
 
 
-    def insert_section_group(self, course_offering_id, code, instructor):
+    @staticmethod
+    def insert_section_group(conn, course_offering_id, code, instructor):
         
         values = (course_offering_id, code, instructor)
-        with self.conn.cursor() as cur:
+        with conn.cursor() as cur:
             cur.execute("EXECUTE insert_section_group (%s, %s, %s)", values)
             section_group_id = cur.fetchone()[0]
 
         return section_group_id
 
 
-    def insert_section_meetings(self, section_meeting_values):
+    @classmethod
+    def insert_section_meetings(cls, conn, section_meeting_values):
         # $1: section group id 
         # $2: meeting type
         # $3: days
@@ -226,11 +237,12 @@ class DataAccess:
         # $7: room
         # $8: (meeting) number
         # $9: seats available
-        self.execute_str_batch("EXECUTE insert_section_meetings "
+        cls.execute_str_batch(conn, "EXECUTE insert_section_meetings "
             "(%s, %s, %s, %s, %s, %s, %s, %s, %s);", section_meeting_values)
 
 
-    def insert_general_meetings(self, general_meeting_values):
+    @classmethod
+    def insert_general_meetings(cls, conn, general_meeting_values):
         # $1: section group id 
         # $2: meeting type
         # $3: days
@@ -240,11 +252,12 @@ class DataAccess:
         # $7: room
         # $8: (meeting) number
         # $9: essential
-        self.execute_str_batch("EXECUTE insert_general_meetings "
+        cls.execute_str_batch(conn, "EXECUTE insert_general_meetings "
             "(%s, %s, %s, %s, %s, %s, %s, %s, %s);", general_meeting_values)
 
 
-    def insert_dated_meetings(self, dated_meeting_values):
+    @classmethod
+    def insert_dated_meetings(cls, conn, dated_meeting_values):
         # $1: section group id 
         # $2: meeting type
         # $3: days
@@ -253,11 +266,12 @@ class DataAccess:
         # $6: building
         # $7: room
         # $8: date
-        self.execute_str_batch("EXECUTE insert_dated_meetings "
+        cls.execute_str_batch(conn, "EXECUTE insert_dated_meetings "
             "(%s, %s, %s, %s, %s, %s, %s, %s);", dated_meeting_values)    
 
 
-    def reset_for_scrape(self):
+    @classmethod
+    def reset_for_scrape(cls, conn):
         """
         Reset database for a new scrape. 
         Delete all course offerings, section groups, and meetings.
@@ -265,7 +279,4 @@ class DataAccess:
         query_str = """
             TRUNCATE section_meeting, general_meeting, dated_meeting, meeting, section_group, course_offering;
         """
-        self.execute_str(query_str)
-
-    def close(self):
-        self.conn.close()
+        cls.execute_str(conn, query_str)

@@ -11,6 +11,7 @@ import scraper_schedule_of_classes.errors as errors
 from scraper_schedule_of_classes.items \
     import CourseMeetingsUncategorized, CourseMeetingsUncategorizedLoader, Meeting, MeetingLoader
 import scraper_schedule_of_classes.utils as utils
+from scraper_schedule_of_classes.db.db import DataAccess
 
 
 SCHEDULE_OF_CLASSES_URL = "https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesFacultyResult.htm"
@@ -47,39 +48,43 @@ class SubjectCoursesSpider(scrapy.Spider):
     for a subject in a given term.
     """
     name = "subject_courses"
-    custom_settings = {
-        "ITEM_PIPELINES": {
-            "scraper_schedule_of_classes.pipelines.CourseCleanerPipeline": 100,
-            "scraper_schedule_of_classes.pipelines.CoursePersistencePipeline": 200, 
-        }
-    }
 
-    def __init__(self, quarter_code = None, subject_code = None, *args, **kwargs):
+    def __init__(self, quarter_code=None, *args, **kwargs):
         super(SubjectCoursesSpider, self).__init__(*args, **kwargs)
         if not quarter_code:
             raise errors.MissingQuarterError(f"The {self.name} spider needs a quarter.")
-        if not subject_code:
-            raise errors.MissingSubjectError(f"The {self.name} spider needs a subject.")
         self.quarter_code = quarter_code
-        self.subject_code = subject_code
 
+        # Query database for all subjects. FIXME: get all subjects instead.
+        self.conn = DataAccess.get_conn()
+        with self.conn:
+            self.subject_codes = DataAccess.get_all_subjects(self.conn)
+
+    
+    def closed(self, reason):
+        print('subject courses spider closing.')
+        DataAccess.put_conn(self.conn)
+        
 
     def start_requests(self):
-        
-        payload = {
-            SUBJECT_QUERY_STR: self.subject_code,
-            TERM_QUERY_STR: self.quarter_code, 
-            SCHED_OPT_1_STR: "true",
-            SCHED_OPT_2_STR: "true"
-        }
 
-        query = urllib.parse.urlencode(payload)
-        url = f"{SCHEDULE_OF_CLASSES_URL}?{query}"
+        for subject_code in self.subject_codes:
 
-        yield scrapy.Request(url, self.parse)
+            payload = {
+                SUBJECT_QUERY_STR: subject_code,
+                TERM_QUERY_STR: self.quarter_code, 
+                SCHED_OPT_1_STR: "true",
+                SCHED_OPT_2_STR: "true"
+            }
+
+            query = urllib.parse.urlencode(payload)
+            url = f"{SCHEDULE_OF_CLASSES_URL}?{query}"
+
+            # Request for the first page of each subject.
+            yield scrapy.Request(url, self.parse, cb_kwargs=dict(subject_code=subject_code))
 
 
-    def parse(self, response):
+    def parse(self, response, subject_code):
         """
         Parse html for the number of pages, then create more requests
         for additional pages if needed.
@@ -94,7 +99,7 @@ class SubjectCoursesSpider(scrapy.Spider):
         # Don't need to request the first page again.
         for i in range (2, num_pages + 1):
             payload = {
-                SUBJECT_QUERY_STR: self.subject_code,
+                SUBJECT_QUERY_STR: subject_code,
                 TERM_QUERY_STR: self.quarter_code, 
                 SCHED_OPT_1_STR: "true",
                 SCHED_OPT_2_STR: "true",
@@ -104,13 +109,14 @@ class SubjectCoursesSpider(scrapy.Spider):
             query = urllib.parse.urlencode(payload)
             url = f"{SCHEDULE_OF_CLASSES_URL}?{query}"
 
-            yield scrapy.Request(url, self.parse_extra_page)
+            yield scrapy.Request(url, self.parse_extra_page, cb_kwargs=dict(subject_code=subject_code))
 
         # Get all the tags with course information
         tags = soup.find_all(utils.tag_matches_any)
 
         # Group by course header.
-        yield from self.course_meeting_items(tags)
+        for item in self.course_meeting_items(tags, subject_code):
+            yield item
         
 
     def get_num_pages(self, soup):
@@ -126,7 +132,7 @@ class SubjectCoursesSpider(scrapy.Spider):
         return num_pages
 
         
-    def parse_extra_page(self, response):
+    def parse_extra_page(self, response, subject_code):
         """
         Parser for pages beyond the first.
         """
@@ -136,10 +142,11 @@ class SubjectCoursesSpider(scrapy.Spider):
         tags = soup.find_all(utils.tag_matches_any)
 
         # Group by course header.
-        yield from self.course_meeting_items(tags)
+        for item in self.course_meeting_items(tags, subject_code):
+            yield item
 
     
-    def course_meeting_items(self, tags):
+    def course_meeting_items(self, tags, subject_code):
         """
         Given some all of the matching tags for one page, 
         return rough items representing all the meetings
@@ -150,7 +157,7 @@ class SubjectCoursesSpider(scrapy.Spider):
         tags_grouped = self.group_tags(tags)
 
         for group in tags_grouped:
-            course_item = self.build_item_from_group(group)
+            course_item = self.build_item_from_group(group, subject_code)
             if course_item:
                 yield course_item
 
@@ -159,7 +166,7 @@ class SubjectCoursesSpider(scrapy.Spider):
         return split_before(tags, lambda tag: not tag.has_attr("class"))
 
 
-    def build_item_from_group(self, tag_group):
+    def build_item_from_group(self, tag_group, subject_code):
         """
         Build a course item from the given group of selectors.
         The first row will always be a crsheader.
@@ -174,7 +181,7 @@ class SubjectCoursesSpider(scrapy.Spider):
         crsheader_tag = tag_group[0]
         loader = CourseMeetingsUncategorizedLoader(item = CourseMeetingsUncategorized())
         loader.add_value("quarter_code", self.quarter_code)
-        loader.add_value("subj_code", self.subject_code)
+        loader.add_value("subj_code", subject_code)
 
         crsheader_tag_tds = crsheader_tag.find_all("td")
         # course number comes from index 2 td

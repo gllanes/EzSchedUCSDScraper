@@ -1,4 +1,5 @@
 import datetime
+import json
 import re
 
 import scraper_schedule_of_classes.errors as errors
@@ -115,3 +116,11 @@ def parse_date(txt):
     else:
         raise errors.ScraperError(f"Could not parse date from {txt}")
     return date
+
+
+class CourseItemEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.time):
+            return obj.isoformat(timespec='seconds')
+        else:
+            return json.JSONEncoder.default(self, obj)

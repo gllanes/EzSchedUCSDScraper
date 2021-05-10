@@ -62,9 +62,11 @@ DOWNLOAD_DELAY = 1
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'scraper_schedule_of_classes.pipelines.ScraperScheduleOfClassesPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'scraper_schedule_of_classes.pipelines.SubjectCleanerPipeline': 100,
+   'scraper_schedule_of_classes.pipelines.CourseCleanerPipeline': 200,
+   'scraper_schedule_of_classes.pipelines.CoursePersistencePipeline': 201
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,3 +90,10 @@ DOWNLOAD_DELAY = 1
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 #Logging
+
+FEEDS = {
+    'items.pickle': {
+        'format': 'pickle',
+        'overwrite': True
+    }
+}

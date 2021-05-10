@@ -3,13 +3,18 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import re
+import json
 import pprint
+import pickle
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 from .db.db import DataAccess
 from .items import *
+from .utils import CourseItemEncoder
+from .spiders.subject_courses_spider import SubjectCoursesSpider
+from .spiders.subjects_spider import SubjectsSpider
 
 
 pp = pprint.PrettyPrinter(indent = 2)
@@ -24,6 +29,10 @@ class SubjectCleanerPipeline:
         Returns a cleaned list of subject codes to subject names.
         Also persist subjects here.
         """
+
+        if not isinstance(spider, SubjectsSpider):
+            return item
+
         adapter = ItemAdapter(item)
         # Get the list of all subjects
         subjects_codes_values = adapter.get("subjects_codes_values")
@@ -47,10 +56,10 @@ class SubjectCleanerPipeline:
 
         # Store in database.
         try:
-            self.DA.insert_subjects(subjects_codes_names)
-            self.DA.commit()
+            DataAccess.insert_subjects(self.conn, subjects_codes_names)
+            self.conn.commit()
         except Exception as e:
-            self.DA.rollback()
+            self.conn.rollback()
             raise e
 
         return {
@@ -58,13 +67,19 @@ class SubjectCleanerPipeline:
         }
 
     def open_spider(self, spider):
-        self.DA = DataAccess()
+        self.conn = DataAccess.get_conn()
 
     def close_spider(self, spider):
-        self.DA.close()
+        DataAccess.put_conn(self.conn)
+        DataAccess.close()
 
 
 class CourseCleanerPipeline:
+
+
+    def __init__(self):
+        print('course cleaner pipeline init')
+
 
     def process_item(self, item, spider):
         """
@@ -73,6 +88,9 @@ class CourseCleanerPipeline:
         general meetings, or dated meetings.
         Return a well-formatted ready for persistence.
         """
+
+        if not isinstance(spider, SubjectCoursesSpider):
+            return item
 
         course_loader = CourseMeetingsLoader(CourseMeetings())
 
@@ -138,22 +156,16 @@ class CourseCleanerPipeline:
 
 class CoursePersistencePipeline:
     """
-    Given an item from the CourseCleanerPipeline, save all the information
-    about this course/section group to the database.
+    Given an item from the CourseCleanerPipeline, write a pickle.
     """
 
-    def open_spider(self, spider):
-        self.DA = DataAccess()
-
-    def close_spider(self, spider):
-        self.DA.close()
+    def __init__(self):
+        self.encoder = CourseItemEncoder()
 
     def process_item(self, item, spider):
-        
-        try:
-            self.DA.insert_section_group_all_info(item) 
-            self.DA.commit()
-
-        except Exception as e:
-            self.DA.rollback()
-            raise e
+        if not isinstance(spider, SubjectCoursesSpider):
+            return item
+        return item
+        # item_json_encoded = self.encoder.encode(ItemAdapter(item).asdict())
+        # print('boutta write')
+        # JLWriter.writeline(json.dumps(item_json_encoded))

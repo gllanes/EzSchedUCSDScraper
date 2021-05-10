@@ -3,6 +3,7 @@ import datetime
 
 from scraper_schedule_of_classes.items import *
 from scraper_schedule_of_classes.pipelines import CourseCleanerPipeline
+from scraper_schedule_of_classes.spiders.subject_courses_spider import SubjectCoursesSpider
 
 from test.meeting_comparator import MeetingComparator
 from test.data import get_spider_parser_items
@@ -32,7 +33,7 @@ class TestCourseCleanerPipeline(MeetingComparator):
         page_num = 8
         spider_parser_items = get_spider_parser_items(quarter_code, subject_code, page_num)
         item = spider_parser_items[2]
-        p_item = self.pipeline.process_item(item, None)
+        p_item = self.pipeline.process_item(item, SubjectCoursesSpider('SP21'))
 
         instructor_exp = "Frano Pereira, Alex M"
         # Section group information is correct.
@@ -103,7 +104,7 @@ class TestCourseCleanerPipeline(MeetingComparator):
         spider_parser_items = get_spider_parser_items(quarter_code, subject_code, page_num)
         # WI21 MATH 2
         item = spider_parser_items[0]
-        p_item = self.pipeline.process_item(item, None)
+        p_item = self.pipeline.process_item(item, SubjectCoursesSpider('SP21'))
         
         instructor_exp = "Quarfoot, David James"
         self.assertEqual(p_item.get("quarter_code"), quarter_code)
@@ -159,7 +160,7 @@ class TestCourseCleanerPipeline(MeetingComparator):
         spider_parser_items = get_spider_parser_items(quarter_code, subject_code, page_num)
         # WI21 MATH 2
         item = spider_parser_items[9]
-        p_item = self.pipeline.process_item(item, None)
+        p_item = self.pipeline.process_item(item, SubjectCoursesSpider('SP21'))
 
         instructor_exp = "Huang, Xiaohua"
         self.assertEqual(p_item.get("quarter_code"), quarter_code)

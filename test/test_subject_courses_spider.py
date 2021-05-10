@@ -41,7 +41,7 @@ class CoursesSpiderBuildItemTest(MeetingComparator):
         be returned.
         """
         single_tag_group = self.tags_grouped[0]
-        item = self.spider.build_item_from_group(single_tag_group)
+        item = self.spider.build_item_from_group(single_tag_group, 'ECE')
         self.assertIsNone(item)
 
 
@@ -51,7 +51,7 @@ class CoursesSpiderBuildItemTest(MeetingComparator):
         has ambiguous information.
         """
         ambig_tag_group = self.tags_grouped[6]
-        item = self.spider.build_item_from_group(ambig_tag_group)
+        item = self.spider.build_item_from_group(ambig_tag_group, 'ECE')
         
         first_meeting_exp = self.build_meeting_item(
             None, "LE", "A00", None, "MW", datetime.time(17, 0),
@@ -90,7 +90,7 @@ class CoursesSpiderBuildItemTest(MeetingComparator):
 
     def test_build_item_with_cancelled_meetings(self):
         cancelled_tag_group = self.tags_grouped[7]
-        item = self.spider.build_item_from_group(cancelled_tag_group)
+        item = self.spider.build_item_from_group(cancelled_tag_group, 'ECE')
 
         first_meeting_exp = self.build_meeting_item(
             None, "LE", "A00", None, "TuTh", datetime.time(15, 30),
